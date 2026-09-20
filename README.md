@@ -114,7 +114,6 @@ See `.env.example` for all environment variables. Key ones:
 
 ## Documentation
 
-- [docs/HLD.md](docs/HLD.md) - High-level design, architecture, data models, workflow
 - Backend API: http://localhost:8000/docs (FastAPI auto-docs)
 
 ## Troubleshooting

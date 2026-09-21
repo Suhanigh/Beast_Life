@@ -52,8 +52,6 @@ Set `MOCK_MODE=1` in `.env` to use mock data instead of real AI providers.
 
 FastAPI backend + React frontend + SQLite database. Background worker executes stages sequentially. Input hash reuse prevents duplicate work. AI generation falls back to procedural rendering for reliability.
 
-See [docs/HLD.md](docs/HLD.md) for detailed architecture, data models, workflow, and security design.
-
 ## API Keys (Optional)
 
 For production-quality AI generation, configure these in `.env`:

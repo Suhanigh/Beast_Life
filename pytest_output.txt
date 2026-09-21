@@ -1,0 +1,100 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.2, pytest-9.1.1, pluggy-1.6.0 -- /Users/suhanighansyala/Documents/Beast_Life/backend/venv/bin/python3.14
+cachedir: .pytest_cache
+rootdir: /Users/suhanighansyala/Documents/Beast_Life/backend
+plugins: asyncio-1.4.0, anyio-4.15.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 7 items
+
+tests/test_campaign_flow.py::test_create_campaign FAILED                 [ 14%]
+tests/test_campaign_flow.py::test_list_campaigns PASSED                  [ 28%]
+tests/test_campaign_flow.py::test_get_campaign PASSED                    [ 42%]
+tests/test_campaign_flow.py::test_research_stage PASSED                  [ 57%]
+tests/test_campaign_flow.py::test_reuse_stage PASSED                     [ 71%]
+tests/test_campaign_flow.py::test_angle_selection PASSED                 [ 85%]
+tests/test_campaign_flow.py::test_retry_succeeded_stage PASSED           [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_create_campaign _____________________________
+tests/test_campaign_flow.py:28: in test_create_campaign
+    assert data["is_mock"] is True  # Should be true due to MOCK_MODE=1
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   assert False is True
+----------------------------- Captured stdout call -----------------------------
+2026-09-21 12:42:53,228 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-21 12:42:53,229 INFO sqlalchemy.engine.Engine INSERT INTO campaign (product_name, factual_product_description, target_audience, campaign_objective, tone, call_to_action, verified_claims, reference_image_path, selected_angle_id, created_at, is_mock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-09-21 12:42:53,229 INFO sqlalchemy.engine.Engine [generated in 0.00018s] ('Test Product', 'A test product for testing', 'Test audience', 'introduce', 'practical_energetic', 'Test CTA', '["Test claim"]', None, None, '2026-09-21 07:12:53.227885', 0)
+2026-09-21 12:42:53,229 INFO sqlalchemy.engine.Engine COMMIT
+2026-09-21 12:42:53,230 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-09-21 12:42:53,231 INFO sqlalchemy.engine.Engine SELECT campaign.id, campaign.product_name, campaign.factual_product_description, campaign.target_audience, campaign.campaign_objective, campaign.tone, campaign.call_to_action, campaign.verified_claims, campaign.reference_image_path, campaign.selected_angle_id, campaign.created_at, campaign.is_mock 
+FROM campaign 
+WHERE campaign.id = ?
+2026-09-21 12:42:53,231 INFO sqlalchemy.engine.Engine [generated in 0.00012s] (18,)
+2026-09-21 12:42:53,232 INFO sqlalchemy.engine.Engine SELECT stagerun.id, stagerun.campaign_id, stagerun.stage, stagerun.status, stagerun.attempt, stagerun.input_hash, stagerun.output_json, stagerun.output_ref, stagerun.error, stagerun.started_at, stagerun.finished_at, stagerun.heartbeat_at, stagerun.provider_usage, stagerun.idempotency_key 
+FROM stagerun 
+WHERE stagerun.campaign_id = ? ORDER BY stagerun.id
+2026-09-21 12:42:53,232 INFO sqlalchemy.engine.Engine [generated in 0.00013s] (18,)
+2026-09-21 12:42:53,232 INFO sqlalchemy.engine.Engine SELECT asset.id, asset.campaign_id, asset.asset_id, asset.asset_type, asset.spec_id, asset.file_path, asset.width, asset.height, asset.duration_seconds, asset.prompt_params, asset.scene_source, asset.fallback_reason, asset.created_at 
+FROM asset 
+WHERE asset.campaign_id = ?
+2026-09-21 12:42:53,233 INFO sqlalchemy.engine.Engine [generated in 0.00013s] (18,)
+2026-09-21 12:42:53,233 INFO sqlalchemy.engine.Engine ROLLBACK
+------------------------------ Captured log call -------------------------------
+INFO     sqlalchemy.engine.Engine:base.py:2712 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1848 INSERT INTO campaign (product_name, factual_product_description, target_audience, campaign_objective, tone, call_to_action, verified_claims, reference_image_path, selected_angle_id, created_at, is_mock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+INFO     sqlalchemy.engine.Engine:base.py:1848 [generated in 0.00018s] ('Test Product', 'A test product for testing', 'Test audience', 'introduce', 'practical_energetic', 'Test CTA', '["Test claim"]', None, None, '2026-09-21 07:12:53.227885', 0)
+INFO     sqlalchemy.engine.Engine:base.py:2718 COMMIT
+INFO     sqlalchemy.engine.Engine:base.py:2712 BEGIN (implicit)
+INFO     sqlalchemy.engine.Engine:base.py:1848 SELECT campaign.id, campaign.product_name, campaign.factual_product_description, campaign.target_audience, campaign.campaign_objective, campaign.tone, campaign.call_to_action, campaign.verified_claims, campaign.reference_image_path, campaign.selected_angle_id, campaign.created_at, campaign.is_mock 
+FROM campaign 
+WHERE campaign.id = ?
+INFO     sqlalchemy.engine.Engine:base.py:1848 [generated in 0.00012s] (18,)
+INFO     sqlalchemy.engine.Engine:base.py:1848 SELECT stagerun.id, stagerun.campaign_id, stagerun.stage, stagerun.status, stagerun.attempt, stagerun.input_hash, stagerun.output_json, stagerun.output_ref, stagerun.error, stagerun.started_at, stagerun.finished_at, stagerun.heartbeat_at, stagerun.provider_usage, stagerun.idempotency_key 
+FROM stagerun 
+WHERE stagerun.campaign_id = ? ORDER BY stagerun.id
+INFO     sqlalchemy.engine.Engine:base.py:1848 [generated in 0.00013s] (18,)
+INFO     sqlalchemy.engine.Engine:base.py:1848 SELECT asset.id, asset.campaign_id, asset.asset_id, asset.asset_type, asset.spec_id, asset.file_path, asset.width, asset.height, asset.duration_seconds, asset.prompt_params, asset.scene_source, asset.fallback_reason, asset.created_at 
+FROM asset 
+WHERE asset.campaign_id = ?
+INFO     sqlalchemy.engine.Engine:base.py:1848 [generated in 0.00013s] (18,)
+INFO     sqlalchemy.engine.Engine:base.py:2715 ROLLBACK
+=============================== warnings summary ===============================
+venv/lib/python3.14/site-packages/fastapi/testclient.py:1
+  /Users/suhanighansyala/Documents/Beast_Life/backend/venv/lib/python3.14/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+venv/lib/python3.14/site-packages/starlette/testclient.py:53
+  /Users/suhanighansyala/Documents/Beast_Life/backend/venv/lib/python3.14/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+app/workflow/runner.py:136
+tests/test_campaign_flow.py::test_angle_selection
+  /Users/suhanighansyala/Documents/Beast_Life/backend/app/workflow/runner.py:136: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    cutoff = datetime.utcnow()
+
+tests/test_campaign_flow.py::test_create_campaign
+tests/test_campaign_flow.py::test_get_campaign
+tests/test_campaign_flow.py::test_research_stage
+tests/test_campaign_flow.py::test_reuse_stage
+tests/test_campaign_flow.py::test_angle_selection
+tests/test_campaign_flow.py::test_retry_succeeded_stage
+  /Users/suhanighansyala/Documents/Beast_Life/backend/venv/lib/python3.14/site-packages/pydantic/_internal/_fields.py:727: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    return fac()
+
+tests/test_campaign_flow.py::test_angle_selection
+  /Users/suhanighansyala/Documents/Beast_Life/backend/app/workflow/runner.py:76: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    stage_run.started_at = datetime.utcnow()
+
+tests/test_campaign_flow.py::test_angle_selection
+  /Users/suhanighansyala/Documents/Beast_Life/backend/app/workflow/runner.py:77: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    stage_run.heartbeat_at = datetime.utcnow()
+
+tests/test_campaign_flow.py::test_angle_selection
+tests/test_campaign_flow.py::test_angle_selection
+  /Users/suhanighansyala/Documents/Beast_Life/backend/app/providers/page_reader.py:138: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "accessed_at": datetime.utcnow().isoformat(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_campaign_flow.py::test_create_campaign - assert False is True
+=================== 1 failed, 6 passed, 14 warnings in 5.70s ===================
